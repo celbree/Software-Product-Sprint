@@ -26,3 +26,16 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+function addRandomMovie() {
+  const movies =
+      ['Watchmen', 'Inception', 'Interstellar', 'Psycho Pass'];
+
+  // Pick a random movie.
+  const movie = movies[Math.floor(Math.random() * movies.length)];
+
+  // Add it to the page.
+  const movieContainer = document.getElementById('movie-container');
+  movieContainer.innerText = movie;
+}
+
