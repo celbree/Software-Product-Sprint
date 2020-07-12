@@ -12,21 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
 function addRandomMovie() {
   const movies =
       ['Watchmen', 'Inception', 'Interstellar', 'Psycho Pass'];
@@ -39,3 +24,53 @@ function addRandomMovie() {
   movieContainer.innerText = movie;
 }
 
+function getHelloName() {
+  fetch('/data').then(response => response.text()).then((greeting) => {
+    document.getElementById('greeting-container').innerText = greeting;
+  });
+}
+
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    // comments is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+    const commentsElement = document.getElementById('comments-container');
+    comments.forEach((comment) => {
+      commentsElement.appendChild(createCommentElement(comment));
+    })
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+
+  const textElement = document.createElement('span');
+  textElement.innerText = comment.text;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+
+    // Remove the comment from the DOM.
+    commentElement.remove();
+  });
+
+  commentElement.appendChild(textElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
+}

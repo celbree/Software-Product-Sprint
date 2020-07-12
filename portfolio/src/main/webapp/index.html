@@ -10,6 +10,7 @@
     <div id="content">
       <h1>Portfolio of Shuai Lu</h1>
       <p><strong><u> Under Construction. </u></strong></p>
+
       <p>
           I'm pursuing a master's degree in Software Engineering Institute, Peking University.  
           My advisor is Prof. Ge Li.
@@ -53,9 +54,24 @@
           <p>Office: Room 1726, Science Building 1, Peking University</p>
       </section>
       <br>
+    
+      <h2>Comments</h2>
+      <form action="/data" method="POST">
+
+        <p>Enter a comments here:</p>
+        <textarea name="text-input">...</textarea>
+        <br>
+        <button type="submit">Send your message</button>
+      </form>
+      <br></br>
+      <button onclick="getComments()">Fetch comments</button>
+      <ul id="comments-container"></ul>
+
+      <h2>Random Movie</h2>
       <p>Click here to get a random message:</p>
       <button onclick="addRandomMovie()">My favourite Movies</button>
       <div id="movie-container"></div>
+      <br></br>
     </div>
   </body>
 </html>
